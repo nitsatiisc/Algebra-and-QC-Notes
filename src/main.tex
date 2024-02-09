@@ -1,0 +1,413 @@
+%! Author = nitinsingh
+%! Date = 24/12/23
+
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{amsmath,amsthm,amsfonts,enumitem,tikz,graphicx}
+\usepackage{tikz-cd}
+\usetikzlibrary{cd}
+\usepackage{geometry}
+\usepackage{adjustbox}
+
+\title{Basic Commutative Algebra: Summary}
+
+\input{notation}
+% Document
+\begin{document}
+\maketitle
+
+The algebraic objects of interest for us in this note are {\em finitely generated abelian groups}. We will
+describe the structure of an arbitrary finitely generated abelian group. We then go on to study rings and modules
+which are {\em noetherian}, i.e the module and all its submodules are finitely generated. For rings, the equivalent
+statement is that the ring and all its ideals are finitely generated.
+Informally, finitely generated algebraic structures are interesting as implicitly we always have a finite set of
+generators to describe an arbitrary sub-structure (such as a submodule or an ideal). We will highlight the usefulness
+of this property as we go along.
+
+\section{Finitely Generated Abelian Group}\label{sec:fin-gen-abe-grp}
+Let $(G,+)$ be an abelian group. We say that $G$ is finitely generated if there exist $g_1,\ldots,g_n\in G$ for
+some $n\in \N$ such that $G=\{m_1 g_1+\cdots+m_n g_n: m_i\in \Z\}$. Clearly, any finite abelian group is finitely
+generated. We also see that a cyclic group is finitely generated (by one generator). Similarly groups like
+$(\Z^n,+)$ are finitely generated (by the standard basis). The following theorem is a structure theorem for all
+finitely generated abelian groups.
+
+\begin{theorem}[Finitely Generated Abelian Groups]\label{thm:fin-gen-abe-grp}
+A finitely generated abelian group $G$ is isomorphic to
+\[ (\Z/n_1\Z)\oplus (\Z/n_2\Z)\oplus \cdots \oplus (\Z/n_r\Z)\oplus \Z^s \]
+for some $n_1|n_2|\cdots n_r\in \N$ and $s\in \N$.
+\end{theorem}
+\begin{proof}
+Since, $G$ is finitely generated, let us fix the generators $g_1,\ldots,g_n$ of $G$. This allows us to view $G$
+as a homomorphic image of $\Z^n$, via the homomorphism $\phi: \Z^n\rightarrow G$ which maps standard basis vector
+$\vec{e}_i$ to $g_i$. Then, we have by the isomorphism theorem $\Z^n/\ker{\phi}\cong G$. Clearly, if $\ker{\phi}$
+is trivial, we see that we can already conclude that $G\cong \Z^n$. So, to fully understand the structure of $G$,
+we must take into account vanishing combinations of generators of $G$.
+
+Let us {\em assume} for
+now that $\ker{\phi}$ is also finitely generated. We will prove it later. Let $h_1,\ldots,h_m$ be generators of
+$\ker{\phi}$, and let $\psi: \Z^m\rightarrow \ker{\phi}$ be the natural surjective homomorphism from $\Z^m$
+to $\ker{\phi}$. Then we have $G\cong \Z^n/\psi(\Z^m)$. Let $A$ denote the $n\times m$ matrix over $\Z$ which
+represents the homomorphism $\psi$. Then $G\cong \Z^n/\range{A}$. Now consider the {\em Smith Normal Form} decomposition
+of the integer matrix $A$ as $PA'Q$ where $A'$ is $n\times m$  diagonal matrix with
+$n_1,\ldots,n_s,0,\ldots,0$ as the diagonal while $P,Q$ are
+invertible (over integers) matrices of sizes $n\times n$ and $m\times m$ respectively.Let $\psi'$ denote the
+homomorphism $\Z^m\rightarrow \Z^n$given by matrix $A'$, and let $\tau$ and $\sigma$ denote isomorphisms
+$\Z^m\rightarrow \Z^m$ and $\Z^n\rightarrow \Z^n$ given by matrices $Q$ and $P$ respectively. We have the
+following commutative diagram.
+
+\adjustbox{scale=2, center}{%
+\begin{tikzcd}[scale=2]
+\Z^m \arrow[r, "\psi"] \arrow[d, "\tau"] & \Z^n \arrow[d, "\sigma"] \\
+\Z^m \arrow[r, "\psi'"] & \Z^n
+\end{tikzcd}
+}
+
+Now we have:
+\begin{align*}
+\Z^n/\psi(\Z^m)\cong \Z^n/\sigma(\psi(Z^m))\cong \Z^n/\psi'(\tau(\Z^m))=\Z^n/\psi'(\Z^m)
+\end{align*}
+Since, $\psi'$ is represented by the diagonal matrix $A'$, the quotient $\Z^n/\psi'(\Z^m)$ is simple
+to describe and is seen to be $(\Z/n_1\Z)\oplus \cdots \oplus (\Z/n_s\Z)\oplus \Z^r$. We now return to
+proving the crucial assumption we made about a subgroup of $\Z^n$ (specifically, $\ker{\phi}$); that it
+is finitely generated. We prove it seperately as a lemma below.
+\end{proof}
+
+\begin{lemma}\label{lem:zn-noetherian}
+For $n\in \N$, any subgroup of $(\Z^n,+)$ is finitely generated.
+\end{lemma}
+\begin{proof}
+We prove by induction. For $n=1$, the claim is true as $\Z$ is a PID, and any additive subgroup of $\Z$ is
+also an ideal of $\Z$. Consider the exact sequence of homomorphisms:
+\adjustbox{scale=1.5, center}{%
+\begin{tikzcd}
+0 \arrow[r] & \Z^n \arrow[r, "\psi"] & \Z^n\oplus \Z \arrow[r, "\phi"] \arrow[d, "\pi"] & \Z \arrow[r] & 0 \\
+ & & (\Z^n\oplus \Z)/{}_{\ker{\phi}} \arrow[ur, dashleftrightarrow, "\bar{\phi}"] & &
+\end{tikzcd}
+}
+In the above $\psi$ is a natural inclusion homomorphism, while $\phi$ is a natural projection homomorphism. Let
+$H$ be a subgroup of $\Z^n\oplus \Z$. Consider $\pi(H)$, the image of subgroup $H$ under the quotient homomorphism
+$\pi: a \mapsto a + \ker{\phi}$. We may think of $\pi(H)$ as $H \textrm{ mod } \ker{\phi}$. Since, $\bar{\phi}$
+is an isomorphism, we conclude that $\pi(H)$ is isomorphic to subgroup of $\Z$ and hence finitely generated.
+Now consider $a\in H$. We have,
+$a+\ker{\phi}\in \pi(H)$ and thus $a+\ker{\phi} = m(h+\ker{\phi})= mh+\ker{\phi}$, for some $m\in \Z$ and
+$h+\ker{\phi}$ is the generator of $\pi(H)$. Thus $a=mh + \ker{\phi}$, and thus $a-mh\in \ker{\phi}$. We note
+that $a-mh\in H$ and thus $a-mh\in H\cap \ker{\phi}$. Since $H\cap \ker{\phi}$ is a subgroup of $\ker{\phi}$,
+and thus by exactness of the sequence is isomorphic to subgroup of $\Z^n$. By induction hypothesis,
+$H\cap \ker{\phi}$ is finitely generated. This implies $a=mh + m_1 h_1 + \cdots + m_k h_k$ for some $m,m_i\in \Z$
+where $h_1,\ldots,h_k$ are generators of $H\cap \ker{\phi}$.
+\end{proof}
+
+\section{Noetherian Rings and Modules}\label{sec:noetherian-rings-modules}
+Noetherian rings and modules are interesting, as any arbitrary ideal/submodule can be described in terms of
+finite number of generators. In this section, we will look at techniques which help us in showing this property,
+in particular we will see results which help us in proving complex structures to be noetherian based on the
+simpler ones.
+
+\begin{definition}[Noetherian Rings and Modules]\label{defn:noetherian}
+An $R$-module $M$ over is called {\em noetherian} if every $R$-submodule of $M$ is finitely generated. A ring
+$R$ is called noetherian if it is a noetherian module over itself, i.e, every ideal in $R$ is finitely generated.
+\end{definition}
+
+The most basic example of a neotherian ring (and module) is $\Z$. The following is an important technique for
+showing modules to be noetherian.
+
+\begin{lemma}\label{lem:ses}
+Let
+\begin{tikzcd}
+0 \arrow[r] & M \arrow[r, "\psi"] & N \arrow[r, "\phi"] & S \arrow[r] & 0
+\end{tikzcd}
+be a short exact sequence of $R$-modules. Then $N$ is noetherian if and only if both $M$  and $S$ are
+noetherian.
+\end{lemma}
+\begin{proof}
+The proof is similar to the proof of Lemma \ref{lem:zn-noetherian}. The essential idea is that a submodule
+$H$ of $N$ can be expressed as $H \textrm{ mod } \ker{\phi}$ + $H\cap \ker{\phi}$, with both of those being
+finitely generated, being isomorphic to sub-modules of noetherian modules $S$ and $M$ respectively.
+\end{proof}
+
+As an application of the above Lemma, let us prove that direct products of noetherian $R$-modules are again
+noetherian.
+
+\begin{lemma}\label{lem:direct-product-noetherian}
+Let $M$ be a noetherian $R$-module. Then $M\oplus M$ is noetherian. Moreover, $M^n$ is noetherian for all
+$n\in \N$.
+\end{lemma}
+\begin{proof}
+Consider the s.e.s
+\begin{tikzcd}
+0 \arrow[r] & M \arrow[r, hook] & M\oplus M \arrow[r] & M \arrow[r] & 0
+\end{tikzcd}
+From Lemma \ref{lem:ses}, $M\oplus M$ is noetherian. By induction, we can extend it to $M^n$ for all $n\in \N$.
+\end{proof}
+We immediately conclude that $\Z^n$ is a noetherian $\Z$-module for all $n\in \N$, which we earlier showed directly.
+Our next lemma makes our life easier. It shows that when considering modules over {\em noetherian} rings, it is
+sufficient for module to be finitely generated for it to be noetherian (i.e, we need not show that all submodules
+are finitely generated as well).
+
+\begin{lemma}\label{lem:modules-noetherian-ring}
+Let $M$ be a finitely generated $R$-module for an noetherian ring $R$. Then $M$ is noetherian.
+\end{lemma}
+\begin{proof}
+Let $M$ be generated by $n$ generators $g_1,\ldots, g_n$. Then there is a surjective homomorphism
+$\phi: R^{\oplus n}\rightarrow M$. Consider the s.e.s:
+\begin{tikzcd}
+    0 \arrow[r] & \ker{\phi} \arrow[r, hook] & R^{\oplus n} \arrow[r, "\phi"] & M \arrow[r] & 0.
+\end{tikzcd}
+We know that $R^{\oplus n}$ is noetherian $R$-module.
+The claim then follows from Lemma \ref{lem:ses}.
+\end{proof}
+
+We now show that quotients of noetherian rings and modules are also neotherian.
+
+\begin{lemma}\label{lem:noetherian-quotients}
+Let $R$ be a noetherian ring and $I$ be an ideal of $R$.
+Then, the quotient $R/I$ is noetherian. Analogous
+claim holds for quotient modules.
+\end{lemma}
+\begin{proof}
+Each of $I$, $R$ and $R/I$ are $R$-modules, and we conclude the result from Lemma \ref{lem:ses} using the
+sequence:
+\begin{tikzcd}
+0 \arrow[r] & I \arrow[r, hook] & R \arrow[r, "\pi"] & R/I \arrow[r] & 0
+\end{tikzcd}
+\end{proof}
+
+We now show than an important class of rings, i.e, the polynomial rings over noetherian rings are also
+noetherian. This is called the Hilbert Basis Theorem. We need a definition:
+\begin{definition}[Finitely Generated Rings over Rings]\label{defn:rings-over-rings}
+We say that a ring $S$ is finitely generated as ring over a ring $R\subseteq S$ if there exists a finite subset
+$\mathcal{X}$ of $S$ such that each element of $S$ can be written as a $R$-linear combination of
+monomials of $\mathcal{X}$.
+\end{definition}
+We note that if $M\supseteq R$ is a finitely generated $R$-module, then it is also finitely generated as a ring
+over $R$.
+
+
+\begin{theorem}[Hilbert Basis Theorem]\label{thm:hilbert-basis-theorem}
+Let $R$ be a noetherian ring. Then the polynomial rings $R[X_1,\ldots,X_n]$ is also noetherian for any $n$.
+\end{theorem}
+\begin{proof}
+It suffices to prove that $R[X]$ is noetherian if $R$ is noetherian. Let $I$ be any ideal of $R[X]$. We need to
+exhibit a finite set of polynomials in $I$, such that an arbitrary $f\in I$ can be expressed as their $R[X]$-linear
+combination. Our approach will be inductive. First, we identify a set of polynomials $f_1,\ldots,f_m$ in $I$
+which will be used to ``annihilate" the leading term of the target polynomial $f$. Then, we can inductively argue
+that the reduced polynomial can be expressed as a linear combination of finite set of polynomials. To this end,
+we consider the set $A$ of leading coefficients of polynomials in $I$. It can be seen that $A$ must be a ideal
+in $R$, and thus is finitely generated ($R$ is noetherian). Let $a_1,\ldots,a_m\in A$ be the generators, and
+let $f_1,\ldots,f_m$ be polynomials in $I$ where $a_i$ is the leading coefficient of $f_i$. Let $d$ be the
+degree of the polynomial with maximum degree in $f_1,\ldots,f_m$.
+
+As base case, we show that all polynomials in $I$ of degree at most $d$ are finitely generated. Let $S_e$ denote
+polynomials in $I$ with degree at most $e$. Note that $S_d$ is an $R$-submodule of the set of all polynomials
+in $R[X]$ of degree at most $d$, which is a finitely generated $R$-module, and hence a noetherian module. Thus,
+$S_d$ is also finitely generated. Let $h_1,\ldots,h_k$ be the polynomials in $I$ which generate the submodule
+$S_d$.
+
+Now, assume that $S_e$ is generated by polynomials $f_1,\ldots,f_m,h_1,\ldots,h_k$ for $e\geq d$. Consider
+$f\in S_{e+1}$, and let $a$ be the leading coefficient of $f$. As $A$ is a finitely generated module, we
+have $a=r_1 a_1 + \cdots + r_m a_m$ for some $r_i\in R$. It can be seen that the polynomial
+$f - \sum_{i=1}^m r_i X^{e+1-deg(f_i)}f_i$ is a polynomial of degree at most $e$ and thus in $S_e$. The claim
+now follows from induction.
+\end{proof}
+
+The above proof relies on two crucial observations: noetherian property of $R$ is used
+to produce a set of polynomials $f_1,\ldots, f_m$ which help us annihilate the leading term of the polynomials
+allowing us to induct. Again, we rely on the noetherian property of bounded degree polynomials in $R[X]$ to seed
+the induction. We really did not have much more structure on the set $S_d$, aside from the fact it is a submodule
+of a noetherian module !!!.
+
+
+\section{Algebraic Numbers and Algebraic Integers}\label{sec:alg-numbers}
+We will call a number $\alpha$ to be {\em algebraic} if it satisfies $p(\alpha)=0$ for some
+polynomial $p\in \Q[X]$. Where does this $\alpha$ belong ? We will assume $\alpha$ to come from
+an algebraically closed extension field of $\Q$, which we denote by $\overline{\Q}$. We may even
+think $\overline{\Q}=\C$.
+
+\begin{definition}[Algebraic Number]\label{defn:alg-number}
+We call $\alpha\in \overline{\Q}$ to be an {\em algebraic number} if it is root of a polynomial
+$p(X)\in \Q[X]$.
+\end{definition}
+Examples of algebraic numbers are $\sqrt{2}$, $\sqrt{5}$ and $(1+\sqrt{5})/2$ which satisfy the polynomials
+$x^2-2$, $x^2-5$ and $x^2-x-1$ respectively. We now show that product and sums of algebraic numbers are again
+algebraic. We first state a useful characterization of algebraic numbers.
+
+\begin{lemma}\label{lem:finite-extension}
+A number $\alpha\in \overline{\Q}$ is algebraic if and only if the ring $\Q[\alpha]$ is a
+finite dimensional vector space over $\Q$.
+\end{lemma}
+\begin{proof}
+Clearly, when $\alpha$ is an algebraic number $\Q[\alpha]$ is generated by $1,\alpha,\ldots,\alpha^{d-1}$ where
+$d$ is the degree of polynomial $p\in \Q[X]$ such that $p(\alpha)=0$.
+Conversely, if $\Q[\alpha]$ is a finite dimensional vector space of dimension $d$, the vectors $1,\alpha,\ldots,
+\alpha^d$ are linearly dependent over $\Q$, and hence $\alpha$ satisfies a polynomial $p(X)\in \Q[X]$ of degree
+$d$.
+\end{proof}
+
+Next, we show closure of algebraic numbers under addition and multiplication.
+\begin{lemma}\label{lem:alg-num-closed}
+Let $\alpha,\beta\in \overline{\Q}$ be algebraic numbers. Then $\alpha+\beta$ and $\alpha\beta$ are also
+algebraic numbers.
+\end{lemma}
+\begin{proof}
+Suppose $\alpha,\beta$ satisfy polynomials of degree $m$ and $n$ respectively over $\Q$. Then it is seen that
+$\Q[\alpha,\beta]$ is finite dimensional vector space over $\Q$ with dimension at most $mn$ (generated by
+monomials of the form $\alpha^i\beta^j$ for $0\i<m$, $0<j<n$). Now $\Q[\alpha+\beta]\subseteq \Q[\alpha,\beta]$,
+and therefore $\Q[\alpha+\beta]$ is a finite dimensional vector space over $\Q$, and by Lemma
+\ref{lem:finite-extension} it is algebraic. Similar argument holds for $\alpha\beta$.
+\end{proof}
+
+Below we illustrate a computational insight into finding a polynomial satisfied by an algebraic number such
+as $\sqrt{2}+\sqrt{5}$. Let $\alpha=\sqrt{2}+\sqrt{5}$. We compute successive powers of $\alpha$, and note that
+the surds in the expansions are from the set $\{\sqrt{2},\sqrt{5}, \sqrt{2}\sqrt{5}\}$. After sufficient powers,
+we can simply ``eliminate'' the square-roots and get a relation amongst powers of $\alpha$ using rational coefficients.
+
+\begin{align*}
+\alpha &= \sqrt{2} + \sqrt{5} \\
+\alpha^2 &= 7 + 2\sqrt{2}\sqrt{5} \\
+\alpha^3 &= 17\sqrt{2} + 11\sqrt{5} \\
+\alpha^4 &= 89 + 28\sqrt{2}\sqrt{5}
+\end{align*}
+
+Eliminating $\sqrt{2}\sqrt{5}$ from second and fourth equations we have $(\alpha^4 - 89)/28=(\alpha^2-7)/2$ which
+gives a rational polynomial satisfied by $\alpha$.
+
+We now define algebraic integers, which are counterparts of $\Z$ in $\Q$.
+\begin{definition}[Algebraic Integer]\label{defn:alg-integer}
+We say that $\alpha\in \overline{\Q}$ is an algebraic integer if it is a root of a {\em monic} polynomial
+$p\in \Z[X]$.
+\end{definition}
+We see that $\sqrt{2}$ is an algebraic integer as it is the root of integral polynomial $x^2 - 2$. We now
+give analogous characterization for algebraic integers.
+
+\begin{lemma}\label{lem:alg-integers-module}
+An algebraic number $\alpha\in \overline{\Q}$ is an algebraic integer if and only if the ring $\Z[\alpha]$
+generated by it is a finitely generated $\Z$ module.
+\end{lemma}
+\begin{proof}
+Clearly, if $\alpha$ is a root of a monic integer polynomial $f$, $\Z[\alpha]$ is generated by $1,\alpha,\ldots,\alpha^{d-1}$,
+where $d=deg(f)$. Conversely, suppose $\Z[\alpha]$ is finitely generated, and let $f_1(\alpha),\ldots,f_n(\alpha)$
+be the generators. Choose $d$ larger than the degrees of polynomials $f_1,\ldots,f_n$. Then we can write
+$\alpha^d = \sum_{i=1}^n m_if_i(\alpha)$. Thus $\alpha$ is a root of monic integer polynomial $x^d-\sum_{i=1}^n m_i f_i$.
+\end{proof}
+
+We now show that algebraic integers are closed under addition and multiplication.
+
+\begin{lemma}\label{lem:alg-integer-closure}
+Let $\alpha,\beta\in K$ be algebraic integers in a number field $K$. Then $\alpha+\beta$ and $\alpha\beta$
+are also algebraic integers in $K$.
+\end{lemma}
+\begin{proof}
+Let $\alpha$ and $\beta$ be roots of integer polynomials of degrees $m$ and $n$ respectively. Then, we see
+that the $\Z$-module $\Z[\alpha,\beta]$ is finitely generated by monomials $\alpha^i\beta^j$ with $0\leq i<m$,
+$0\leq j<n$. Since $\alpha+\beta\in \Z[\alpha,\beta]$, $\Z[\alpha+\beta]$ is a $\Z$-submodule of
+$\Z[\alpha,\beta]$. Since $\Z[\alpha,\beta]$ is noetherian, the submodule $\Z[\alpha+\beta]$ is finitely generated.
+Thus $\alpha+\beta$ is an algebraic integer. Similar argument shows $\alpha\beta$ to be an algebraic integer.
+\end{proof}
+
+The computational approach for finding an integer polynomial for $\sqrt{2}+\sqrt{5}$ no longer works. This is
+because we can no longer ``eliminate" the square-roots over $\Z$. Thus, the Lemma \ref{lem:alg-integer-closure}
+essentially gives an existential characterization, without implying an algorithmic scheme.
+
+\section{Ring of Integers}\label{sec:ring-of-integers}
+We say that $K$ is a number field if it is a finite degree extension field of $\Q$, i.e $[K:\Q] < \infty$.
+Let $K$ be a number field. By {\em primitive element theorem}, there exists $\alpha\in K$ such that
+$K=\Q(\alpha)$. Moreover, there exists an irreducible polynomial $f\in\Q[X]$ of degree $n=[K:\Q]$ such
+that $f(\alpha)=0$. We now define the ring of integers:
+
+\begin{definition}[Ring of Integers]\label{defn:ring-of-integers}
+Let $K$ be a number field. The ring of integers of $K$, denoted by $\roi{K}$ is defined as:
+\begin{equation*}
+\roi{K} = \{\alpha \in K: \alpha \text{ is an algebraic integer }\}
+\end{equation*}
+\end{definition}
+As an example, it can be seen that for $K=\Q$, $\roi{K}=\Z$. One can also show that for
+$K=\Q(i)$, where $i$ is a root of the polynomial $X^2+1$, we have $\roi{K}=\Z[i]$. In general,
+however it is not true that $\Z[\alpha]$ is the ring of integers of $\Q(\alpha)$. In fact,
+we can easily show that $\Z[\sqrt{5}]$ is not the ring of integers for $Q(\sqrt{5})$ (the
+ring of integers in this case is $\Z[\varphi]$ where $\varphi=(1+\sqrt{5})/2$). Minimal
+polynomials are often useful in computing the ring of algebraic integers. We state a lemma
+and illustrate its usefulness with an example.
+
+\begin{lemma}\label{lem:min-poly}
+A number $a\in K$ is an algebraic integer if and only if its minimal polynomial has coefficients in $\Z$.
+\end{lemma}
+
+\begin{example}\label{ex:q-root-5}
+The ring of integers of the number field $\Q(\sqrt{5})$ is given by $\Z[\varphi]$ for $\varphi=(1+\sqrt{5})/2$.
+\end{example}
+\begin{proof}
+Let $x=a+b\sqrt{5}\in \Q(\sqrt{5})$ be an algebraic integer. To determine the minimal polynomial of $x$, we
+consider the linear map $T_x: Q(\sqrt{5})\rightarrow Q(\sqrt{5})$ which maps $t$ to $x\cdot t$. The matrix
+of $T_x$ with respect to the basis $\{1, \sqrt{5}\}$ of $\Q(\sqrt{5})$ is given by:
+\begin{align*}
+A &= \begin{pmatrix}
+        a & 5b \\
+        b & a
+    \end{pmatrix}
+\end{align*}
+Using Cayley-Hamilton theorem, the minimial polynomial of $T_x$ (and thus also of $x$) is given by
+$(X-a)^2 - 5b^2= X^2 -2aX + (a^2 - 5b^2)$. We require $2a$ and $a^2 - 5b^2$ to be integers. Thus
+$a=k/2$ for some $k\in \Z$ and $k^2/4 - 5b^2\in \Z$, and thus $5b^2\in \frac{1}{4}\Z$. This implies whenever
+$a$ has denominator as $2$, $b$ also has denominator as $2$. This proves that ring of algebraic integers
+is generated by $(1+\sqrt{5})/2$.
+\end{proof}
+
+In general though, the ring of integers of a number field is difficult to characterize. We will, therefore
+introduce a somewhat simpler ring structure called an {\em order}.
+
+\begin{definition}[Order]\label{defn:order}
+An order in $\roi{K}$ for a number field $K$ is a subring $R$ of $\roi{K}$ such that the quotient $\roi{K}/R$
+is finite.
+\end{definition}
+We will show later that for $K=\Q(\alpha)$, the ring $\Z[\alpha]$ is an order in $\roi{K}$. Now, we show
+how $\roi{K}$ resembles the ring $\Z$, in that some integer multiple of an element in $K$ eventually lands
+up in $\roi{K}$ !!!.
+
+\begin{lemma}\label{lem:roi-q-intersection}
+Let $K$ be a number field with $\roi{K}$ as its ring of integers. Then $\roi{K}\cap \Q=\Z$ and
+$\Q \roi{K}=K$.
+\end{lemma}
+\begin{proof}
+It is not difficult to see that for $a/b\in \Q$ with $\mathrm{gcd}(a,b)=1$ and $b\neq 1$, $\Z[a/b]$ is not
+finitely generated. Thus $\roi{K}\cap \Q=\Z$. Next, we show that for $a\in K$, there exists integer $d\in \Z$
+such that $da\in \roi{K}$. We use the minimal polynomial $f(X)$ of $a$. For an integer $d$, we note that
+$d^{\mathrm{deg}(f)}f(X/d)$ is the minimal polynomial of $da$. We choose $d$ to be the least common multiple of
+all the denominators of the coefficients of $f$, which ensures that $d^{\mathrm{deg}(f)}f(X/d)$ is a monic polynomial
+in $\Z[X]$. Thus $da$ is integral, i.e. $da\in \roi{K}$. This implies $\Q \roi{K}=K$.
+\end{proof}
+
+Next, we will introduce two linear functionals, {\em norm} and {\em trace} respectively, which are important in
+the study of algebraic integers. As a heads up, both the linear functionals take values in $\Z$ for algebraic
+integers. We make a definition for an arbitrary pair of number fields.
+
+\begin{definition}[Norm and Trace]\label{defn:norm-and-trace}
+Let $K\subseteq L$ be number fields with $[L:K]=d$. Define a $K$-linear map $\ell_a: L\rightarrow L$ (viewing
+$L$ as a $d$-dimensional vector space over $K$) by $x\mapsto a\cdot x$. Then we define $\norm{L}{K}(a)=\det{{\ell_a}}$ and
+$\trace{L}{K}(a)=\mathrm{Tr}(\ell_a)$. It can be seen that both the operators map $L$ into the field $K$.
+\end{definition}
+
+We can describe the norms and traces in terms of orbit of the element under the Galois group of embeddings.
+
+\begin{lemma}\label{lem:norm-and-trace}
+Let $K\subseteq L$ be number fields with $[L:K]=d$. Let $\sigma_1,\ldots,\sigma_d$ denote distinct $K$-embeddings
+of $L$ into $\overline{\Q}$. Then we have:
+\begin{align*}
+\norm{L}{K}(a) = \prod_{i=1}^d \sigma_i(a), \quad \trace{L}{K}(a) &= \sum_{i=1}^d \sigma_i(a).
+\end{align*}
+\end{lemma}
+Before, we proceed with the proof, we notice that if $a$ is an algebraic integer, then $\norm{L}{K}(a)$
+and $\trace{L}{K}(a)$ are also elements of the integer ring $\roi{K}$. Now, we proceed with the proof.
+\begin{proof}
+
+\end{proof}
+
+
+
+
+
+
+
+
+\end{document}
