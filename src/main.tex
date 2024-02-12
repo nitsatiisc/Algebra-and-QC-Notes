@@ -84,7 +84,7 @@ also an ideal of $\Z$. Consider the exact sequence of homomorphisms:
 \adjustbox{scale=1, center}{%
 \begin{tikzcd}
 0 \arrow[r] & \Z^n \arrow[r, "\psi"] & \Z^n\oplus \Z \arrow[r, "\phi"] \arrow[d, "\pi"] & \Z \arrow[r] & 0 \\
- & & (\Z^n\oplus \Z)/{}_{\ker{\phi}} \arrow[ur, dashleftrightarrow, "\bar{\phi}"] & &
+ & & (\Z^n\oplus \Z)/{}_{\ker{\phi}} \arrow[ur, "\bar{\phi}"] & &
 \end{tikzcd}
 }
 In the above $\psi$ is a natural inclusion homomorphism, while $\phi$ is a natural projection homomorphism. Let
@@ -442,7 +442,7 @@ of $L$ into $\overline{\Q}$. We cover this in detail in the detour on field embe
 \end{proof}
 
 \subsection{Detour on Field Embeddings}\label{subsec:embeddings}
-For fields $K$ and $L$, an {\em embedding} is a ring homomorphism $\sigam: K\rightarrow L$. It also follows that an
+For fields $K$ and $L$, an {\em embedding} is a ring homomorphism $\sigma: K\rightarrow L$. It also follows that an
 embedding is {\em injective}. Let $f(X)=f_0+f_1 X+\cdots+f_k X^k\in K[X]$ be a polynomial. We define $\sigma f$ to be the polynomial
 $\sigma(f_0) + \sigma(f_1)X+\cdots + \sigma(f_k)X^k$. It must be noted that $\sigma f\in (\sigma F)[X]$.
 
@@ -530,12 +530,14 @@ We have the following Lemma relating normal extensions and splitting fields.
 A finite extension $L$ of a field $K$ is a {\em normal} extension if and only if $L$ is the splitting field of some polynomial $p\in K[X]$.
 \end{lemma}.
 
-A {\em normal closure} of a field $K$, is the smallest finite extension of $K$ which is also a normal extension. We have the following:
+A {\em normal closure} of a field $K$, is the smallest finite extension of $K$ which is also a normal extension.
+We have the following:
 \begin{lemma}\label{lem:normal-closure}
 Let $L$ be a finite extension of $K$. Then the normal closure of $L$ is also a finite extension of $K$.
 \end{lemma}
 
-This concludes our detour into the field embeddings. We return to investigating the norms and traces over field extensions.
+This concludes our detour into the field embeddings.
+We return to investigating the norms and traces over field extensions.
 
 \subsection{Tower Property for Norms and Traces}\label{subsec:norms-tower-prop}
 We show that norms and traces satisfy the tower property with respect to field extensions:
